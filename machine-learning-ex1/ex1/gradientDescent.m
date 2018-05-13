@@ -16,17 +16,18 @@ for iter = 1:num_iters
     % Hint: While debugging, it can be useful to print out the values
     %       of the cost function (computeCost) and gradient here.
     %
+    predictions = X * theta;
+    difference = predictions - y; 
+    transposeX = X';
+    slopes = transposeX * difference;
 
-
-
-
-
-
+    theta = theta - (alpha/m) * slopes;
 
     % ============================================================
 
     % Save the cost J in every iteration    
     J_history(iter) = computeCost(X, y, theta);
+    %plotData(1:iter, J_history);
 
 end
 
