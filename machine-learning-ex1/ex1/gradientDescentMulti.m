@@ -17,15 +17,12 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
+    predictions = X * theta;
+    difference = predictions - y; 
+    transposeX = X';
+    slopes = transposeX * difference;
 
-
-
-
-
-
-
-
-
+    theta = theta - (alpha/m) * slopes;
 
     % ============================================================
 
