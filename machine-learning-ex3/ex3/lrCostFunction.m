@@ -35,18 +35,19 @@ grad = zeros(size(theta));
 %           temp(1) = 0;   % because we don't add anything for j = 0  
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
+yTransposed = y';
+thetaWithoutFirst = theta(2:end);
+predictions = sigmoid(X * theta);
+regularizationValue = lambda / (2 * m) * sum(thetaWithoutFirst .^ 2)
 
-
-
-
-
-
-
+J = (1/m)*(-yTransposed*log(predictions) - (1 - yTransposed)*log(1 - predictions)) + regularizationValue;
 
 
 
 % =============================================================
+firstGradWithoutReguralization = (1/m) * sum(predictions - y);
 
-grad = grad(:);
+grad = (1 / m) * (X' * (predictions - y)) + (lambda / m) * theta;
+grad(1) = firstGradWithoutReguralization;
 
 end
