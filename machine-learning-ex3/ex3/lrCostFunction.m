@@ -38,7 +38,7 @@ grad = zeros(size(theta));
 yTransposed = y';
 thetaWithoutFirst = theta(2:end);
 predictions = sigmoid(X * theta);
-regularizationValue = lambda / (2 * m) * sum(thetaWithoutFirst .^ 2)
+regularizationValue = lambda / (2 * m) * sum(thetaWithoutFirst .^ 2);
 
 J = (1/m)*(-yTransposed*log(predictions) - (1 - yTransposed)*log(1 - predictions)) + regularizationValue;
 
