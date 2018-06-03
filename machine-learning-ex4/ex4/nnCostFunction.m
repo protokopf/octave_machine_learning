@@ -31,9 +31,6 @@ J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
 
-delta_1 = zeros(size(Theta1));
-delta_2 = zeros(size(Theta2));
-
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
 %               following parts.
@@ -71,8 +68,11 @@ for i = 1:m
   a_2_error = (Theta2' * a_3_error) .* a_2 .* (1 - a_2);
   a_2_error = a_2_error(2:end);
   
-  detla_1 = delta_1 + a_2_error * a_1';
-  detla_2 = delta_2 + a_3_error * a_2'; 
+  detla_1_member = a_2_error * a_1';
+  delta_2_member = a_3_error * a_2';
+  
+  Theta1_grad = Theta1_grad + detla_1_member;
+  Theta2_grad = Theta2_grad + delta_2_member; 
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %
@@ -87,8 +87,8 @@ regularizationTerm = (lambda/(2*m))*(sum(sum(Theta1(:,2:end) .^ 2)) + sum(sum(Th
 
 J = J / m + regularizationTerm;
 
-Theta1_grad = (1/m)*detla_1;
-Theta2_grad = (1/m)*detla_2;
+Theta1_grad = (1/m)*Theta1_grad;
+Theta2_grad = (1/m)*Theta2_grad;
 
 
 % -------------------------------------------------------------
