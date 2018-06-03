@@ -24,21 +24,31 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % Setup some useful variables
 m = size(X, 1);
+yTranspose = y';
          
 % You need to return the following variables correctly 
 J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
 
+
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
 %               following parts.
-%
+for i = 1:m 
 % Part 1: Feedforward the neural network and return the cost in the
 %         variable J. After implementing Part 1, you can verify that your
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
-%
+  currentFeatures = [1 X(i,:)];
+  currentY = zeros(1, num_labels);
+  currentY(y(i)) = 1;
+  hiddenValues = sigmoid(Theta1 * currentFeatures');
+  predictions = sigmoid(Theta2 * [1; hiddenValues]);
+  errorForEachLabel = ((-currentY*log(predictions)) - (1 - currentY)*log(1 - predictions));
+  
+  
+  J = J + sum(errorForEachLabel);
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
@@ -61,7 +71,11 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+endfor
 
+regularizationTerm = (lambda/(2*m))*(sum(sum(Theta1(:,2:end) .^ 2)) + sum(sum(Theta2(:,2:end) .^ 2)));
+
+J = J / m + regularizationTerm;
 
 
 
