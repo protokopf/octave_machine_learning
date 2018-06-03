@@ -31,6 +31,8 @@ J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
 
+delta_1 = zeros(size(Theta1));
+delta_2 = zeros(size(Theta2));
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
@@ -40,12 +42,14 @@ for i = 1:m
 %         variable J. After implementing Part 1, you can verify that your
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
-  currentFeatures = [1 X(i,:)];
-  currentY = zeros(1, num_labels);
-  currentY(y(i)) = 1;
-  hiddenValues = sigmoid(Theta1 * currentFeatures');
-  predictions = sigmoid(Theta2 * [1; hiddenValues]);
-  errorForEachLabel = ((-currentY*log(predictions)) - (1 - currentY)*log(1 - predictions));
+  a_1 = [1; X(i,:)'];
+  y_m = zeros(num_labels,1);
+  y_m(y(i)) = 1;
+  z_2 = Theta1 * a_1;
+  a_2 = [1; sigmoid(z_2)];
+  z_3 = Theta2 * a_2;
+  a_3 = sigmoid(z_3);
+  errorForEachLabel = ((-y_m'*log(a_3)) - (1 - y_m')*log(1 - a_3));
   
   
   J = J + sum(errorForEachLabel);
@@ -63,7 +67,12 @@ for i = 1:m
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
-  outputError = currentY - predictions;
+  a_3_error = a_3 - y_m;
+  a_2_error = (Theta2' * a_3_error) .* a_2 .* (1 - a_2);
+  a_2_error = a_2_error(2:end);
+  
+  detla_1 = delta_1 + a_2_error * a_1';
+  detla_2 = delta_2 + a_3_error * a_2'; 
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %
@@ -78,21 +87,8 @@ regularizationTerm = (lambda/(2*m))*(sum(sum(Theta1(:,2:end) .^ 2)) + sum(sum(Th
 
 J = J / m + regularizationTerm;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Theta1_grad = (1/m)*detla_1;
+Theta2_grad = (1/m)*detla_2;
 
 
 % -------------------------------------------------------------
