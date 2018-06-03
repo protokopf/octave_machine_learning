@@ -63,6 +63,7 @@ for i = 1:m
 %         Hint: We recommend implementing backpropagation using a for-loop
 %               over the training examples if you are implementing it for the 
 %               first time.
+  outputError = currentY - predictions;
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %
