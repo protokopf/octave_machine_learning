@@ -68,11 +68,8 @@ for i = 1:m
   a_2_error = (Theta2' * a_3_error) .* a_2 .* (1 - a_2);
   a_2_error = a_2_error(2:end);
   
-  detla_1_member = a_2_error * a_1';
-  delta_2_member = a_3_error * a_2';
-  
-  Theta1_grad = Theta1_grad + detla_1_member;
-  Theta2_grad = Theta2_grad + delta_2_member; 
+  Theta1_grad = Theta1_grad + a_2_error * a_1';
+  Theta2_grad = Theta2_grad + a_3_error * a_2'; 
 %
 % Part 3: Implement regularization with the cost function and gradients.
 %
