@@ -18,18 +18,12 @@ grad = zeros(size(theta));
 %
 %               You should set J to the cost and grad to the gradient.
 %
+precitions = X * theta;
+allThetaExceptFirst = theta(2:end);
+regularizedTerm = (lambda/(2*m))*sum(allThetaExceptFirst .^ 2);
+J = (1/(2*m))*sum(((precitions - y) .^ 2)) + regularizedTerm;
 
-
-
-
-
-
-
-
-
-
-
-
+grad = (1/m)*(X' * (precitions - y)) + (lambda/m)*[0; allThetaExceptFirst];
 % =========================================================================
 
 grad = grad(:);
