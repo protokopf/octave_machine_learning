@@ -9,6 +9,7 @@ n = 1899;
 
 % You need to return the following variables correctly.
 x = zeros(n, 1);
+indices_length = length(word_indices);
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Fill in this function to return a feature vector for the
@@ -47,15 +48,8 @@ x = zeros(n, 1);
 %              x = [ 0 0 0 0 1 0 0 0 ... 0 0 0 0 1 ... 0 0 0 1 0 ..];
 %
 %
-
-
-
-
-
-
-
-
+for i=1:indices_length
+  x(word_indices(i)) = 1;
+endfor
 % =========================================================================
-    
-
 end
