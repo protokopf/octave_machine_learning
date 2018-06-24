@@ -24,17 +24,12 @@ centroids = zeros(K, n);
 %               centroid i.
 %
 % Note: You can use a for-loop over the centroids to compute this.
-%
 
-
-
-
-
-
-
-
+for k=1:K
+  matches=idx==k;
+  matchesNumber=sum(matches);
+  centroids(k,:) = (X' * matches) * (1/matchesNumber);
+endfor
 % =============================================================
-
-
 end
 
