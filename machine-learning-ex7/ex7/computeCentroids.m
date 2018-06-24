@@ -26,8 +26,8 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 
 matchesMatrix = idx == [1:K];
-notAveragedSums = (X' * matchesMatrix);
-centroids = (notAveragedSums ./ sum(matchesMatrix))';
+notAveragedSums = (matchesMatrix' * X);
+centroids = notAveragedSums ./ sum(matchesMatrix)';
 
 % =============================================================
 end
