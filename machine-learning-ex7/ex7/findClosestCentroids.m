@@ -23,11 +23,7 @@ idx = zeros(size(X,1), 1);
 %
 for exIndex=1:m
   currEx = X(exIndex,:);
-  distances = zeros(K,1);
-  for centrIndex = 1:K
-    currCentr = centroids(centrIndex, :);
-    distances(centrIndex) = sqrt(sum((currEx - currCentr) .^ 2));
-  endfor
+  distances = sqrt(sum(((currEx - centroids) .^ 2)'));
   [dummy, minIndex] = min(distances);
   idx(exIndex) = minIndex;
 endfor
