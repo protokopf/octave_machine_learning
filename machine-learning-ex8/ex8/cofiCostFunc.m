@@ -43,22 +43,13 @@ predictions = X * Theta';
 errors = predictions - Y;
 errorsForRated = errors .* R;
 
-J = sum(sum(errorsForRated .^ 2)) / 2;
+ThetaSquaredSum = sum(sum(Theta .^ 2));
+XSquaredSum = sum(sum(X .^ 2));
+lambdaOverTwo = lambda / 2;
+
+J = (sum(sum(errorsForRated .^ 2)) / 2) + lambdaOverTwo*(ThetaSquaredSum + XSquaredSum);
 X_grad = errorsForRated * Theta;
 Theta_grad = errorsForRated' * X;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 % =============================================================
 
