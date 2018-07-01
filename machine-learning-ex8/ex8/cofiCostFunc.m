@@ -41,11 +41,11 @@ Theta_grad = zeros(size(Theta));
 %
 predictions = X * Theta';
 errors = predictions - Y;
-sqErrors = errors .^ 2;
+errorsForRated = errors .* R;
 
-J = sum(sum(sqErrors .* R)) / 2;
-X_grad = (errors .* R) * Theta;
-Theta_grad = X' * (errors .* R);
+J = sum(sum(errorsForRated .^ 2)) / 2;
+X_grad = errorsForRated * Theta;
+Theta_grad = errorsForRated' * X;
 
 
 
