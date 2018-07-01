@@ -48,8 +48,8 @@ XSquaredSum = sum(sum(X .^ 2));
 lambdaOverTwo = lambda / 2;
 
 J = (sum(sum(errorsForRated .^ 2)) / 2) + lambdaOverTwo*(ThetaSquaredSum + XSquaredSum);
-X_grad = errorsForRated * Theta;
-Theta_grad = errorsForRated' * X;
+X_grad = errorsForRated * Theta + (X * lambda);
+Theta_grad = errorsForRated' * X + (Theta * lambda);
 
 % =============================================================
 
